@@ -24,6 +24,42 @@ class FT{
     int rangesum(int l,int r){
         return sum(r)-sum(l-1);
     }
+// Question:
+//
+// We are given frequencies stored in a Fenwick Tree.
+//
+// find(k):
+// Returns the smallest index idx such that
+//
+// prefixSum(idx) >= k
+//
+// Example:
+//
+// frequencies = [2, 3, 1, 4]
+//
+// prefix sums:
+//
+// index 1 -> 2
+// index 2 -> 5
+// index 3 -> 6
+// index 4 -> 10
+//
+// find(4) returns 2
+// because prefixSum(1)=2 < 4
+// and prefixSum(2)=5 >= 4
+//
+// Time Complexity: O(log N)
+    int find(int k){
+        int cur=0;
+        int prev=0;
+        for(int i=log2(fen.size());i>=0;i--){
+            if(cur+(1<<i)<fen.size() && fen[cur+(1<<i)]+prev<k){
+                cur=cur+(1<<i);
+                prev=prev+fen[cur];
+            }
+        }
+        return cur+1;
+    }
 };
 /*
 Question:
